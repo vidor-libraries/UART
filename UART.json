@@ -1,0 +1,94 @@
+{
+  "sc":{
+    "name":"UART",
+    "include":"uart.h",
+    "uid":"UART_UID",
+    "rpc":"uartRpc",
+    "ver":"UART_VER",
+    "loop":"",
+    "priv":[
+      {
+        "type":"d",
+        "device":{
+          "func":"UART_DEV"
+        }
+      }
+    ],
+    "swpck":"UART"
+  },
+  "module":{
+    "name":"arduino_16550_uart",
+    "version":"18.1",
+    "className":"VidorUART",
+    "instanceName":"UART",
+    "description":"UART",
+    "author":"",
+    "parameters":[
+      {"name":"FAMILY", "def":"Cyclone 10 LP"},
+      {"name":"MEM_BLOCK_TYPE", "def":"AUTO"},
+      {"name":"FIFO_MODE", "def":"0"},
+      {"name":"FIFO_DEPTH", "def":"128"},
+      {"name":"FIFO_WATERMARK", "def":"0"},
+      {"name":"FIFO_HWFC", "def":"0"},
+      {"name":"FIFO_SWFC", "def":"0"},
+      {"name":"DMA_EXTRA", "def":"0"},
+      {"name":"clockRate", "def":"100000000"}
+    ]
+  },
+  "interfaces":[
+    {
+      "name":"RS_232_Serial",
+      "type":"output",
+      "mates":["pins"],
+      "visibility":"1",
+      "signals": [
+        {"name":"sin"    , "bits":"1", "direction":"input" , "fid":"UART_PIN_FNC_RX"},
+        {"name":"sout"   , "bits":"1", "direction":"output", "fid":"UART_PIN_FNC_TX"},
+        {"name":"sout_oe", "bits":"1", "direction":"output"}
+      ]
+    },
+    {
+      "name":"RS_232_Modem",
+      "type":"output",
+      "mates":["pins"],
+      "visibility":"1",
+      "signals": [
+        {"name":"cts_n" , "bits":"1", "direction":"input" , "fid":"UART_PIN_FNC_CTS" },
+        {"name":"rts_n" , "bits":"1", "direction":"output", "fid":"UART_PIN_FNC_RTS" },
+        {"name":"dsr_n" , "bits":"1", "direction":"input" , "fid":"UART_PIN_FNC_DSR" },
+        {"name":"dcd_n" , "bits":"1", "direction":"input" , "fid":"UART_PIN_FNC_DCD" },
+        {"name":"ri_n"  , "bits":"1", "direction":"input" , "fid":"UART_PIN_FNC_RI"  },
+        {"name":"dtr_n" , "bits":"1", "direction":"output", "fid":"UART_PIN_FNC_DTR" },
+        {"name":"out1_n", "bits":"1", "direction":"output", "fid":"UART_PIN_FNC_OUT1"},
+        {"name":"out2_n", "bits":"1", "direction":"output", "fid":"UART_PIN_FNC_OUT2"}
+      ]
+    },
+    {
+      "name":"uart_interrupt",
+      "mates":["interrupt_controller"],
+      "visibility":"2",
+      "signals": [
+        {"name":"irq_sender", "bits":"1", "direction":"output"}
+      ]
+    }
+  ],
+  "hw":[
+    {
+      "interface":"avalon_slave",
+      "name":"avalon_slave",
+      "parameters":[
+        {"signal":"address", "name":"SPAN", "value":"7"},
+        {"signal":"read_data", "name":"BIT_WIDTH", "value":"32"},
+        {"signal":"write_data", "name":"BIT_WIDTH", "value":"32"}
+      ]
+    },
+    {
+      "interface":"RS_232_Serial",
+      "name":"RS_232_Serial"
+    },
+    {
+      "interface":"RS_232_Modem",
+      "name":"RS_232_Modem"
+    }
+  ]
+}
